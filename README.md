@@ -1,2 +1,2 @@
 # MATH4330
-Mathematical Computing
+Mathematical Computing (TTU Spring 2019) - Final project
