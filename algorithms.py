@@ -8,6 +8,26 @@ def vandermonde(n, vector):
     return result
 
 def modified_gs(matrix):
+    temp = [[0] * len(matrix[0])] * len(matrix)
+    R = [[0] * len(matrix[0])] * len(matrix)
+    Q = [[0] * len(matrix[0])] * len(matrix)
+    for i in range(n):
+        temp[i] = matrix[i]
+    for i in range(n):
+        R[i][i] = p_norm(2, temp[i])
+        Q[i] = scalar_vector_mult(inverse(R[i][i]), temp[i])
+        for j in range(i+1, n):
+            R[i][j] = dot_product(Q[i], temp[j])
+            temp[j] = vector_subtract(v[j], scalar_vector_mult(R[i][j], Q[i]))
+    return [Q, R]
+
+def p_norm(p, v):
+    #TODO
+
+def scalar_vector_mult(s, v):
+    #TODO
+
+def vector_subtract(a, b):
     #TODO
 
 def conjugate_transpose(matrix):
