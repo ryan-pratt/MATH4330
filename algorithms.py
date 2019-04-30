@@ -22,13 +22,20 @@ def modified_gs(matrix):
     return [Q, R]
 
 def p_norm(p, v):
-    #TODO
+    result = 0;
+    for element in v:
+        result += abs(element) ** p
+    return result ** (1 / p)
 
 def scalar_vector_mult(s, v):
-    #TODO
+    for element in v:
+        element *= s
+    return v
 
 def vector_subtract(a, b):
-    #TODO
+    for i in range(len(a)):
+        a[i] -= b[i]
+    return a
 
 def conjugate_transpose(matrix):
     return conjugate_matrix(transpose(matrix))
@@ -60,9 +67,9 @@ def conjugate(s):
     return s.real - s.imaj
 
 def conjugate_matrix(matrix):
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            matrix[i][j] = conjugate(matrix[i][j])
+    for col in matrix:
+        for element in col:
+            element = conjugate(element)
     return matrix
 
 def transpose(matrix):
