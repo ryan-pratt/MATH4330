@@ -28,14 +28,16 @@ def p_norm(p, v):
     return result ** (1 / p)
 
 def scalar_vector_mult(s, v):
-    for element in v:
-        element *= s
-    return v
+    result = [0] * len(v)
+    for i in range(len(v)):
+        result[i] *= s
+    return result
 
 def vector_subtract(a, b):
+    result = [0] * len(a)
     for i in range(len(a)):
-        a[i] -= b[i]
-    return a
+        result[i] = a[i] - b[i]
+    return result
 
 def conjugate_transpose(matrix):
     return conjugate_matrix(transpose(matrix))
@@ -60,17 +62,19 @@ def matrix_vector_mult(matrix, vector):
 def dot_product(a, b):
     result = 0;
     for i in range(len(a)):
-        result += conjugate(a[i]) * b[i]
+        #result += conjugate(a[i]) * b[i]
+        result += a[i] * b[i]
     return result
 
 def conjugate(s):
     return s.real - s.imag
 
 def conjugate_matrix(matrix):
-    for col in matrix:
-        for element in col:
-            element = conjugate(element)
-    return matrix
+    result = [[0] * len(matrix[0])] * len(matrix)
+    for i in len(matrix):
+        for j in len(matrix[0]):
+            result[i][j] = conjugate(result[i][j])
+    return result
 
 def transpose(matrix):
     result = [[0] * len(matrix)] * len(matrix[0])
