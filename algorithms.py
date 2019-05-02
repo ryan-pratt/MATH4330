@@ -1,10 +1,8 @@
 def vandermonde(n, vector):
     result = gen_matrix(n,len(vector))
-    for i in range(n):
-        col = [0] * len(vector)
-        for j in range(len(vector)):
-            col[j] = vector[j] ** i
-        result[i] = col
+    for i in range(len(result)):
+        for j in range(len(result[0])):
+            result[i][j] = vector[j] ** i
     return result
 
 def modified_gs(matrix):
@@ -73,9 +71,9 @@ def conjugate(s):
 
 def conjugate_matrix(matrix):
     result = gen_matrix(len(matrix),len(matrix[0]))
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            result[i][j] = conjugate(result[i][j])
+    for i in range(len(result)):
+        for j in range(len(result[0])):
+            result[i][j] = conjugate(matrix[i][j])
     return result
 
 def transpose(matrix):
