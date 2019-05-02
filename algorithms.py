@@ -1,5 +1,5 @@
 def vandermonde(n, vector):
-    result = [[0] * len(vector)] * n
+    result = gen_matrix(n,len(vector))
     for i in range(n):
         col = [0] * len(vector)
         for j in range(len(vector)):
@@ -8,17 +8,17 @@ def vandermonde(n, vector):
     return result
 
 def modified_gs(matrix):
-    temp = [[0] * len(matrix[0])] * len(matrix)
-    R = [[0] * len(matrix[0])] * len(matrix)
-    Q = [[0] * len(matrix[0])] * len(matrix)
+    v = gen_matrix(len(matrix),len(matrix[0]))
+    R = gen_matrix(len(matrix),len(matrix[0]))
+    Q = gen_matrix(len(matrix),len(matrix[0]))
     for i in range(len(matrix)):
-        temp[i] = matrix[i]
+        v[i] = matrix[i]
     for i in range(len(matrix)):
-        R[i][i] = p_norm(2, temp[i])
-        Q[i] = scalar_vector_mult(inverse(R[i][i]), temp[i])
-        for j in range(i+1, len(matrix)):
-            R[i][j] = dot_product(Q[i], temp[j])
-            temp[j] = vector_subtract(temp[j], scalar_vector_mult(R[i][j], Q[i]))
+        R[i][i] = p_norm(2, v[i])
+        Q[i] = scalar_vector_mult(inverse(R[i][i]), v[i])
+        for j in range(i+1, len(matrix[0])):
+            R[j][i] = dot_product(Q[i], v[j])
+            v[j] = vector_subtract(v[j], scalar_vector_mult(R[j][i], Q[i]))
     return [Q, R]
 
 def p_norm(p, v):
@@ -28,13 +28,13 @@ def p_norm(p, v):
     return result ** (1 / p)
 
 def scalar_vector_mult(s, v):
-    result = [0] * len(v)
+    result = gen_vector(len(v)) 
     for i in range(len(v)):
-        result[i] *= s
+        result[i] = s * v[i]
     return result
 
 def vector_subtract(a, b):
-    result = [0] * len(a)
+    result = gen_vector(len(a)) 
     for i in range(len(a)):
         result[i] = a[i] - b[i]
     return result
@@ -54,7 +54,7 @@ def inverse(s):
     return conjugate(s) / (s * conjugate(s))
     
 def matrix_vector_mult(matrix, vector):
-    result = [0] * len(vector)
+    result = gen_vector(len(vector))
     for i in range(len(matrix)):
         result[i] = dot_product(matrix[i], vector)
     return result
@@ -62,23 +62,37 @@ def matrix_vector_mult(matrix, vector):
 def dot_product(a, b):
     result = 0;
     for i in range(len(a)):
-        #result += conjugate(a[i]) * b[i]
-        result += a[i] * b[i]
+        result += conjugate(a[i]) * b[i]
     return result
 
 def conjugate(s):
-    return s.real - s.imag
+    #I can't figure out how to make this work
+    #result = s.real
+    #result -= (s.imag)j    <-- it doesn't like the (...)j
+    return s.conjugate()
 
 def conjugate_matrix(matrix):
-    result = [[0] * len(matrix[0])] * len(matrix)
-    for i in len(matrix):
-        for j in len(matrix[0]):
+    result = gen_matrix(len(matrix),len(matrix[0]))
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
             result[i][j] = conjugate(result[i][j])
     return result
 
 def transpose(matrix):
-    result = [[0] * len(matrix)] * len(matrix[0])
+    result = gen_matrix(len(matrix[0]),len(matrix))
     for i in range(len(result)):
         for j in range(len(result[0])):
             result[i][j] = matrix[j][i]
     return result
+
+def gen_vector(n):
+    v = []
+    for i in range(n):
+        v.append(0)
+    return v
+
+def gen_matrix(m,n):
+    matrix = []
+    for i in range(m):
+        matrix.append(gen_vector(n))
+    return matrix
