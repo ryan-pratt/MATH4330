@@ -64,10 +64,9 @@ def dot_product(a, b):
     return result
 
 def conjugate(s):
-    #I can't figure out how to make this work
-    #result = s.real
-    #result -= (s.imag)j    <-- it doesn't like the (...)j
-    return s.conjugate()
+    result = s.real
+    result -= (s.imag)*1j
+    return result
 
 def conjugate_matrix(matrix):
     result = gen_matrix(len(matrix),len(matrix[0]))
