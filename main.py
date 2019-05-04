@@ -28,7 +28,7 @@ def degree_4_interpolation(features, labels):
     alpha = algs.back_substitution(R, algs.matrix_vector_mult(Q_star, labels))
     return alpha
 
-#this is a test with random input and prints the output formatted into a string
+#this is a test with arbitrary input and prints the output formatted into a string
 if __name__ == "__main__":
     f = [0+0j, -0.69583+0j, 1+0j, 2+0j]
     l = [1+0j, 0+0j, 10+0j, 49+0j]
